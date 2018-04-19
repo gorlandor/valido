@@ -3,8 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datetime/css/react-datetime.css';
 
-import { Valido, EmailValidation, PasswordValidation, PhoneValidation } from './helpers/Valido';
+import Datetime from 'react-datetime';
+
+import { Valido, EmailValidation, PasswordValidation, PhoneValidation, RequiredValidation } from './helpers/Valido';
 
 class App extends Component {
 
@@ -14,6 +17,7 @@ class App extends Component {
       Phone: '',
       Email: '',
       Password: '',
+      DateofBirth: '',
       Dirty: false
     };
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -52,7 +56,7 @@ class App extends Component {
   render() {
 
 
-    const { Phone, Email, Password, Dirty } = this.state;
+    const { Phone, Email, Password, DateofBirth, Dirty } = this.state;
 
 
     return (
@@ -107,6 +111,24 @@ class App extends Component {
                   </label>
 
                   {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
+
+                </div>
+              </div>
+            </div>
+
+
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="form-group">
+                  <label className="text-left">
+                    Date of Birth <span style={{ color: 'red' }}>*</span>
+                    <Datetime
+                      timeFormat={false}
+                      inputProps={{ name: 'DateofBirth', className: 'form-control', onBlur: this.handleUserInput }}
+                    />
+                  </label>
+
+                  {Dirty && <RequiredValidation value={DateofBirth} fieldName={'Date of Birth'} />}
 
                 </div>
               </div>
