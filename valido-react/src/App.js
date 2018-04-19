@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datetime/css/react-datetime.css';
 
 import Datetime from 'react-datetime';
+import MaskedInput from 'react-text-mask';
 
 import { Valido, EmailValidation, PasswordValidation, PhoneValidation, RequiredValidation } from './helpers/Valido';
 
@@ -106,8 +107,16 @@ class App extends Component {
               <div className="col-xs-12">
                 <div className="form-group">
                   <label className="text-left">
-                    Phone <span style={{ color: 'red' }}>*</span>
-                    <input type='text' name='Phone' className="form-control" onChange={this.handleUserInput} />
+                    Phone with Mask <span style={{ color: 'red' }}>*</span>
+                    <MaskedInput
+                      className="form-control"
+                      guide={true}
+                      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                      name='Phone'
+                      onChange={this.handleUserInput}
+                      placeholder="Enter a phone number"
+                      required
+                    />
                   </label>
 
                   {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
