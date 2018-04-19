@@ -4,7 +4,7 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { EmailValidation, PasswordValidation } from './helpers/Valido';
+import { Valido, EmailValidation, PasswordValidation, PhoneValidation } from './helpers/Valido';
 
 class App extends Component {
 
@@ -13,9 +13,12 @@ class App extends Component {
     this.state = {
       Phone: '',
       Email: '',
-      Password: ''
+      Password: '',
+      Dirty: false
     };
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   handleUserInput(event) {
@@ -25,11 +28,31 @@ class App extends Component {
 
   }
 
+  handleSubmit(event) {
+
+    event.preventDefault();
+
+    this.setState({ Dirty: true });
+
+    if (this.isValid(this.state)) {
+      alert('yeah, buddy');
+    }
+    else {
+      console.warn('form is invalid');
+    }
+
+  }
+
+  isValid({ Phone, Email, Password }) {
+    return Valido.IsEmail(Email)
+      && Valido.IsPhoneNumber(Phone, 'en-US')
+      && Valido.IsPassword(Password);
+  }
 
   render() {
 
 
-    const { Email, Password } = this.state;
+    const { Phone, Email, Password, Dirty } = this.state;
 
 
     return (
@@ -38,22 +61,22 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Valido</h1>
         </header>
-        
+
 
 
         <div className="container">
-          <form>
-          
+          <form onSubmit={this.handleSubmit} noValidate>
+
 
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
                   <label className="text-left">
-                    Email*
+                    Email <span style={{ color: 'red' }}>*</span>
                     <input type="email" name="Email" className="form-control" onChange={this.handleUserInput} required />
                   </label>
 
-                  <EmailValidation value={Email} required={true} />
+                  {Dirty && <EmailValidation value={Email} required={true} />}
 
                 </div>
               </div>
@@ -64,18 +87,33 @@ class App extends Component {
               <div className="col-xs-12">
                 <div className="form-group">
                   <label className="text-left">
-                    Password*
+                    Password <span style={{ color: 'red' }}>*</span>
                     <input type='password' name='Password' className="form-control" onChange={this.handleUserInput} />
                   </label>
 
-                  <PasswordValidation value={Password} alphanumeric={true} minlength={6} required={true} />
+                  {Dirty && <PasswordValidation value={Password} alphanumeric={true} minlength={6} required={true} />}
 
                 </div>
               </div>
             </div>
 
 
-            <button className="btn btn-primary" disabled={true}>Submit</button>
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="form-group">
+                  <label className="text-left">
+                    Phone <span style={{ color: 'red' }}>*</span>
+                    <input type='text' name='Phone' className="form-control" onChange={this.handleUserInput} />
+                  </label>
+
+                  {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
+
+                </div>
+              </div>
+            </div>
+
+
+            <button className="btn btn-primary">Submit</button>
 
 
           </form>
