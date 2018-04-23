@@ -13,13 +13,15 @@ const PhoneValidation = ({ value, locale = 'en-US', showValue = false, required 
       ? (
         <React.Fragment>
           <RequiredValidation fieldName={'Phone'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale) && <p style={defaultStyles}>{`${value} is not a valid phone.`}</p>}
+          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale)
+            && <p style={defaultStyles}>{`${value} is not a valid phone.`}</p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
           <RequiredValidation fieldName={'Phone'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale) && <p style={defaultStyles}>{`The value given is not a valid phone.`}</p>}
+          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale)
+            && <p style={defaultStyles}>{`The value given is not a valid phone.`}</p>}
         </React.Fragment>
       )
   }
@@ -27,12 +29,14 @@ const PhoneValidation = ({ value, locale = 'en-US', showValue = false, required 
     return (showValue)
       ? (
         <React.Fragment>
-          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale) && <p style={defaultStyles}>{`${value} is not a valid phone.`}</p>}
+          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale)
+            && <p style={defaultStyles}>{`${value} is not a valid phone.`}</p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
-          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale) && <p style={defaultStyles}>{`The value given is not a valid phone.`}</p>}
+          {!validator.isEmpty(value) && !validator.isMobilePhone(value, locale)
+            && <p style={defaultStyles}>{`The value given is not a valid phone.`}</p>}
         </React.Fragment>
       )
   }

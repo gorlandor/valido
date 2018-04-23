@@ -6,4 +6,5 @@ body {
 
 .container {
   padding: 2rem;
+  max-width: 540px;
 }

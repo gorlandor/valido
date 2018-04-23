@@ -1,25 +1,38 @@
 import React from 'react';
-import validator from 'validator';
+import Valido from './Valido.util';
 import defaultStyles from './Styles';
 
 import RequiredValidation from './RequiredValidation';
 
-const PasswordValidation = ({ value, alphanumeric = true, minlength = 8, showValue = false, required = false, styles = defaultStyles }) => {
+const PasswordValidation = ({ value, alphanumeric = true, containsUpperCase = true, minlength = 8, maxlength = 15, showValue = false, required = false, styles = defaultStyles }) => {
 
-  const isPassword = new RegExp(`(?=^.{${minlength},}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$`);
+  const isPassword = Valido.IsPassword(value, alphanumeric, containsUpperCase, minlength, maxlength);
+  const isEmpty = Valido.IsEmpty(value);
+
+  const validationMessage = {
+    alphanumeric: alphanumeric ? `be alphanumeric,`: ``,
+    shouldContainUpperCase: containsUpperCase ? `contain capital letter(s),` : ``,
+    properLength: `have a length of ${minlength} to ${maxlength} chars.`
+  };
 
   if (required) {
     return (showValue)
       ? (
         <React.Fragment>
           <RequiredValidation fieldName={'Password'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !isPassword.test(value) && <p style={defaultStyles}>{`${value} must be alphanumeric, contain capital letter(s), and have a min of ${minlength} chars.`}</p>}
+          {!isEmpty && !isPassword
+            && <p style={defaultStyles}>
+              {`${value} must ${validationMessage.alphanumeric} ${validationMessage.shouldContainUpperCase} ${validationMessage.properLength}`}
+            </p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
           <RequiredValidation fieldName={'Password'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !isPassword.test(value) && <p style={defaultStyles}>{`Password must be alphanumeric, contain capital letter(s), and have a min of ${minlength} chars.`}</p>}
+          {!isEmpty && !isPassword
+            && <p style={defaultStyles}>
+              {`Password must ${validationMessage.alphanumeric} ${validationMessage.shouldContainUpperCase} ${validationMessage.properLength}`}
+            </p>}
         </React.Fragment>
       )
   }
@@ -27,12 +40,18 @@ const PasswordValidation = ({ value, alphanumeric = true, minlength = 8, showVal
     return (showValue)
       ? (
         <React.Fragment>
-          {!isPassword.test(value) && <p style={defaultStyles}>{`${value} must be alphanumeric, contain capital letter(s), and have a min of ${minlength} chars.`}</p>}
+          {!isPassword
+            && <p style={defaultStyles}>
+              {`${value} must ${validationMessage.alphanumeric} ${validationMessage.shouldContainUpperCase} ${validationMessage.properLength}`}
+            </p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
-          {!isPassword.test(value) && <p style={defaultStyles}>{`Password must be alphanumeric, contain capital letter(s), and have a min of ${minlength} chars.`}</p>}
+          {!isPassword
+            && <p style={defaultStyles}>
+              {`Password must ${validationMessage.alphanumeric} ${validationMessage.shouldContainUpperCase} ${validationMessage.properLength}`}
+            </p>}
         </React.Fragment>
       )
   }

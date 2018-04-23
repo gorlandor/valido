@@ -1,22 +1,26 @@
 import React from 'react';
-import validator from 'validator';
+import Valido from './Valido.util';
 import defaultStyles from './Styles';
 
 import RequiredValidation from './RequiredValidation';
 
 const EmailValidation = ({ value, showValue = false, required = false, styles = defaultStyles }) => {
+
+  const isEmail = Valido.IsEmail(value);
+  const isEmpty = Valido.IsEmpty(value);
+
   if (required) {
     return (showValue)
       ? (
         <React.Fragment>
           <RequiredValidation fieldName={'Email'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !validator.isEmail(value) && <p style={defaultStyles}>{`${value} is not a valid email.`}</p>}
+          {!isEmpty && !isEmail && <p style={defaultStyles}>{`${value} is not a valid email.`}</p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
           <RequiredValidation fieldName={'Email'} value={value} styles={defaultStyles} />
-          {!validator.isEmpty(value) && !validator.isEmail(value) && <p style={defaultStyles}>{`The value given is not a valid email.`}</p>}
+          {!isEmpty && !isEmail && <p style={defaultStyles}>{`The value given is not a valid email.`}</p>}
         </React.Fragment>
       )
   }
@@ -24,12 +28,12 @@ const EmailValidation = ({ value, showValue = false, required = false, styles = 
     return (showValue)
       ? (
         <React.Fragment>
-          {!validator.isEmail(value) && <p style={defaultStyles}>{`${value} is not a valid email.`}</p>}
+          {!isEmail && <p style={defaultStyles}>{`${value} is not a valid email.`}</p>}
         </React.Fragment>
       )
       : (
         <React.Fragment>
-          {!validator.isEmail(value) && <p style={defaultStyles}>{`The value given is not a valid email.`}</p>}
+          {!isEmail && <p style={defaultStyles}>{`The value given is not a valid email.`}</p>}
         </React.Fragment>
       )
   }

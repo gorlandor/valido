@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datetime/css/react-datetime.css';
 
 import Datetime from 'react-datetime';
-import MaskedInput from 'react-text-mask';
+import InputMask from 'react-input-mask';
 
 import { Valido, EmailValidation, PasswordValidation, PhoneValidation, RequiredValidation } from './helpers/Valido';
 
@@ -19,7 +19,13 @@ class App extends Component {
       Email: '',
       Password: '',
       DateofBirth: '',
-      Dirty: false
+      Dirty: true,
+      PasswordDetails: {
+        alphanumeric: false,
+        containsUpperCase: false,
+        minlength: 8,
+        maxlength: 10
+      }
     };
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,7 +63,7 @@ class App extends Component {
   render() {
 
 
-    const { Phone, Email, Password, DateofBirth, Dirty } = this.state;
+    const { Phone, Email, Password, PasswordDetails, DateofBirth, Dirty } = this.state;
 
 
     return (
@@ -70,16 +76,17 @@ class App extends Component {
 
 
         <div className="container">
-          <form onSubmit={this.handleSubmit} noValidate>
+          <form className='w-100' onSubmit={this.handleSubmit} noValidate>
 
 
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left">
+                  <label className="text-left" htmlFor={'Email'}>
                     Email <span style={{ color: 'red' }}>*</span>
-                    <input type="email" name="Email" className="form-control" onChange={this.handleUserInput} required />
                   </label>
+
+                  <input type="email" id="Email" name="Email" className="form-control" onChange={this.handleUserInput} required />
 
                   {Dirty && <EmailValidation value={Email} required={true} />}
 
@@ -87,16 +94,47 @@ class App extends Component {
               </div>
             </div>
 
-
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left">
-                    Password <span style={{ color: 'red' }}>*</span>
-                    <input type='password' name='Password' className="form-control" onChange={this.handleUserInput} />
-                  </label>
 
-                  {Dirty && <PasswordValidation value={Password} alphanumeric={true} minlength={6} required={true} />}
+                  <h3 className="text-success">Password Details</h3>
+
+                  <div className="checkbox">
+                    <label className="control-label">
+                      <input
+                        name="PasswordDetails.alphanumeric"
+                        type="checkbox"
+                        onChange={(event) => {
+                          this.setState({
+                            PasswordDetails: {
+                              ...PasswordDetails,
+                              alphanumeric: event.target.checked
+                            }
+                          })
+                        }}
+                      />
+                      alphanumeric:
+                    </label>
+                  </div>
+
+                  <div className="checkbox">
+                    <label className="control-label">
+                      <input
+                        name="PasswordDetails.containsUpperCase"
+                        type="checkbox"
+                        onChange={(event) => {
+                          this.setState({
+                            PasswordDetails: {
+                              ...PasswordDetails,
+                              containsUpperCase: event.target.checked
+                            }
+                          })
+                        }}
+                       />
+                      contains capital letters:
+                    </label>
+                  </div>
 
                 </div>
               </div>
@@ -106,18 +144,34 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left">
+                  <label className="text-left" htmlFor={'Password'}>
+                    Password <span style={{ color: 'red' }}>*</span>
+                    </label>
+
+                  <input type='password' name='Password' className="form-control" onChange={this.handleUserInput} />
+                  {Dirty && <PasswordValidation value={Password} alphanumeric={PasswordDetails.alphanumeric} containsUpperCase={PasswordDetails.containsUpperCase} minlength={6} required={true} />}
+
+                </div>
+              </div>
+            </div>
+
+
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="form-group">
+                  <label className="text-left" htmlFor={'Phone'}>
                     Phone with Mask <span style={{ color: 'red' }}>*</span>
-                    <MaskedInput
-                      className="form-control"
-                      guide={true}
-                      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                  </label>
+
+                    <InputMask
+                      className='form-control'
+                      id='Phone'
+                      mask='(999)999-9999'
+                      maskChar=' '
                       name='Phone'
                       onChange={this.handleUserInput}
-                      placeholder="Enter a phone number"
-                      required
+                      {...this.props}
                     />
-                  </label>
 
                   {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
 
@@ -129,13 +183,13 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left">
+                  <label className="text-left" htmlFor={'DateofBirth'}>
                     Date of Birth <span style={{ color: 'red' }}>*</span>
+                    </label>
                     <Datetime
                       timeFormat={false}
-                      inputProps={{ name: 'DateofBirth', className: 'form-control', onBlur: this.handleUserInput }}
+                      inputProps={{ id: 'DateofBirth', name: 'DateofBirth', className: 'form-control', onBlur: this.handleUserInput }}
                     />
-                  </label>
 
                   {Dirty && <RequiredValidation value={DateofBirth} fieldName={'Date of Birth'} />}
 
