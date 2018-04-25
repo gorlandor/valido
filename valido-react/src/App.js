@@ -44,15 +44,14 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-
     event.preventDefault();
-    this.setState({ Dirty: true });
-
-    if (this.isValid(this.state)) {
-      alert('yeah, buddy');
-    } else {
-      console.warn('form is invalid');
-    }
+    this.setState({ Dirty: true }, () => {
+      if (this.isValid(this.state)) {
+        alert('yeah, buddy');
+      } else {
+        console.warn('form is invalid');
+      }
+    });
   }
 
   isValid({ Phone, Email, Password }) {
