@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datetime/css/react-datetime.css';
 
 import Datetime from 'react-datetime';
 import InputMask from 'react-input-mask';
 
-import { Valido, EmailValidation, PasswordValidation, PhoneValidation, RequiredValidation } from './helpers/Valido';
+import {
+  Valido,
+  EmailValidation,
+  PasswordValidation,
+  PhoneValidation,
+  RequiredValidation,
+ } from './helpers/Valido';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +29,7 @@ class App extends Component {
         alphanumeric: false,
         containsUpperCase: false,
         minlength: 8,
-        maxlength: 10
+        maxlength: 10,
       }
     };
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -36,22 +41,17 @@ class App extends Component {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
-
   }
 
   handleSubmit(event) {
-
     event.preventDefault();
-
-    this.setState({ Dirty: true });
-
-    if (this.isValid(this.state)) {
-      alert('yeah, buddy');
-    }
-    else {
-      console.warn('form is invalid');
-    }
-
+    this.setState({ Dirty: true }, () => {
+      if (this.isValid(this.state)) {
+        alert('yeah, buddy');
+      } else {
+        console.warn('form is invalid');
+      }
+    });
   }
 
   isValid({ Phone, Email, Password }) {
@@ -62,9 +62,14 @@ class App extends Component {
 
   render() {
 
-
-    const { Phone, Email, Password, PasswordDetails, DateofBirth, Dirty } = this.state;
-
+    const {
+      Phone,
+      Email,
+      Password,
+      PasswordDetails,
+      DateofBirth,
+      Dirty,
+    } = this.state;
 
     return (
       <div className="App">
@@ -73,11 +78,8 @@ class App extends Component {
           <h1 className="App-title">Valido</h1>
         </header>
 
-
-
         <div className="container">
           <form className='w-100' onSubmit={this.handleSubmit} noValidate>
-
 
             <div className="row">
               <div className="col-xs-12">
@@ -97,7 +99,6 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-
                   <h3 className="text-success">Password Details</h3>
 
                   <div className="checkbox">
@@ -140,7 +141,6 @@ class App extends Component {
               </div>
             </div>
 
-
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
@@ -154,7 +154,6 @@ class App extends Component {
                 </div>
               </div>
             </div>
-
 
             <div className="row">
               <div className="col-xs-12">
@@ -188,24 +187,21 @@ class App extends Component {
                     </label>
                     <Datetime
                       timeFormat={false}
-                      inputProps={{ id: 'DateofBirth', name: 'DateofBirth', className: 'form-control', onBlur: this.handleUserInput }}
+                      inputProps={{ id: 'DateofBirth',
+                          name: 'DateofBirth',
+                          className: 'form-control',
+                          onBlur: this.handleUserInput }}
                     />
 
                   {Dirty && <RequiredValidation value={DateofBirth} fieldName={'Date of Birth'} />}
-
                 </div>
               </div>
             </div>
 
-
             <button className="btn btn-primary">Submit</button>
-
 
           </form>
         </div>
-
-
-
       </div>
     );
   }
