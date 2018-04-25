@@ -4,10 +4,17 @@ import defaultStyles from './Styles';
 
 import RequiredValidation from './RequiredValidation';
 
-const EmailValidation = ({ value, showValue = false, required = false, styles = defaultStyles }) => {
+const EmailValidation = ({
+  value,
+  showValue = false,
+  required = false,
+  styles = defaultStyles,
+  callback = (valid = false, type = "") => { }
+}) => {
 
   const isEmail = Valido.IsEmail(value);
   const isEmpty = Valido.IsEmpty(value);
+  callback(isEmail, "Email");
 
   if (required) {
     return (showValue)

@@ -21,8 +21,9 @@ class Valido {
   }
 
   static IsPassword(value, alphanumeric = true, containsUpperCase = true, minlength = 8, maxlength = 15) {
+    const shouldContainNumbers = alphanumeric ? `((?=.*\\d)|(?=.*\\W+))` : ``;
     const shouldContainUpperCase = containsUpperCase ? `(?=.*[A-Z])` : ``;
-    const regex = new RegExp(`(?=^.{${minlength},${maxlength}}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])${shouldContainUpperCase}(?=.*[a-z]).*$`);
+    const regex = new RegExp(`(?=^.{${minlength},${maxlength}}$)${shouldContainNumbers}(?![.\\n])${shouldContainUpperCase}(?=.*[a-z]).*$`);
     return regex.test(value);
   };
 

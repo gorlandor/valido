@@ -14,7 +14,7 @@ import {
   PasswordValidation,
   PhoneValidation,
   RequiredValidation,
- } from './helpers/Valido';
+} from './helpers/Valido';
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class App extends Component {
       Email: '',
       Password: '',
       DateofBirth: '',
-      Dirty: true,
+      Dirty: false,
       PasswordDetails: {
         alphanumeric: false,
         containsUpperCase: false,
@@ -54,10 +54,11 @@ class App extends Component {
     });
   }
 
-  isValid({ Phone, Email, Password }) {
+  isValid({ Phone, Email, Password, DateofBirth }) {
     return Valido.IsEmail(Email)
       && Valido.IsPhoneNumber(Phone, 'en-US')
-      && Valido.IsPassword(Password);
+      && Valido.IsPassword(Password, false, false, 6, 15)
+      && !Valido.IsEmpty(DateofBirth);
   }
 
   render() {
@@ -79,7 +80,7 @@ class App extends Component {
         </header>
 
         <div className="container">
-          <form className='w-100' onSubmit={this.handleSubmit} noValidate>
+          <form className="w-100" onSubmit={this.handleSubmit} noValidate>
 
             <div className="row">
               <div className="col-xs-12">
@@ -88,7 +89,15 @@ class App extends Component {
                     Email <span style={{ color: 'red' }}>*</span>
                   </label>
 
-                  <input type="email" id="Email" name="Email" className="form-control" onChange={this.handleUserInput} required />
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    className="form-control"
+                    id="Email"
+                    name="Email"
+                    onChange={this.handleUserInput}
+                    required
+                  />
 
                   {Dirty && <EmailValidation value={Email} required={true} />}
 
@@ -99,7 +108,7 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <h3 className="text-success">Password Details</h3>
+                  <h4 className="text-success">Password Details</h4>
 
                   <div className="checkbox">
                     <label className="control-label">
@@ -132,7 +141,7 @@ class App extends Component {
                             }
                           })
                         }}
-                       />
+                      />
                       contains capital letters:
                     </label>
                   </div>
@@ -146,9 +155,17 @@ class App extends Component {
                 <div className="form-group">
                   <label className="text-left" htmlFor={'Password'}>
                     Password <span style={{ color: 'red' }}>*</span>
-                    </label>
+                  </label>
 
-                  <input type='password' name='Password' className="form-control" onChange={this.handleUserInput} />
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    className="form-control"
+                    id="Password"
+                    name="Password"
+                    onChange={this.handleUserInput}
+                  />
+
                   {Dirty && <PasswordValidation value={Password} alphanumeric={PasswordDetails.alphanumeric} containsUpperCase={PasswordDetails.containsUpperCase} minlength={6} required={true} />}
 
                 </div>
@@ -162,15 +179,16 @@ class App extends Component {
                     Phone with Mask <span style={{ color: 'red' }}>*</span>
                   </label>
 
-                    <InputMask
-                      className='form-control'
-                      id='Phone'
-                      mask='(999)999-9999'
-                      maskChar=' '
-                      name='Phone'
-                      onChange={this.handleUserInput}
-                      {...this.props}
-                    />
+                  <InputMask
+                    autoComplete="tel tel-national"
+                    className="form-control"
+                    id="Phone"
+                    mask="(999)999-9999"
+                    maskChar=" "
+                    name="Phone"
+                    onChange={this.handleUserInput}
+                    {...this.props}
+                  />
 
                   {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
 
@@ -184,14 +202,16 @@ class App extends Component {
                 <div className="form-group">
                   <label className="text-left" htmlFor={'DateofBirth'}>
                     Date of Birth <span style={{ color: 'red' }}>*</span>
-                    </label>
-                    <Datetime
-                      timeFormat={false}
-                      inputProps={{ id: 'DateofBirth',
-                          name: 'DateofBirth',
-                          className: 'form-control',
-                          onBlur: this.handleUserInput }}
-                    />
+                  </label>
+                  <Datetime
+                    timeFormat={false}
+                    inputProps={{
+                      className: "form-control",
+                      id: "DateofBirth",
+                      name: "DateofBirth",
+                      onBlur: this.handleUserInput
+                    }}
+                  />
 
                   {Dirty && <RequiredValidation value={DateofBirth} fieldName={'Date of Birth'} />}
                 </div>

@@ -4,13 +4,23 @@ import defaultStyles from './Styles';
 
 import RequiredValidation from './RequiredValidation';
 
-const PasswordValidation = ({ value, alphanumeric = true, containsUpperCase = true, minlength = 8, maxlength = 15, showValue = false, required = false, styles = defaultStyles }) => {
+const PasswordValidation = ({ value,
+  alphanumeric = true,
+  containsUpperCase = true,
+  minlength = 8,
+  maxlength = 15,
+  showValue = false,
+  required = false,
+  styles = defaultStyles,
+  callback = (valid = false, type = "") => { }
+}) => {
 
   const isPassword = Valido.IsPassword(value, alphanumeric, containsUpperCase, minlength, maxlength);
   const isEmpty = Valido.IsEmpty(value);
+  callback(isPassword, "Password");
 
   const validationMessage = {
-    alphanumeric: alphanumeric ? `be alphanumeric,`: ``,
+    alphanumeric: alphanumeric ? `be alphanumeric,` : ``,
     shouldContainUpperCase: containsUpperCase ? `contain capital letter(s),` : ``,
     properLength: `have a length of ${minlength} to ${maxlength} chars.`
   };
