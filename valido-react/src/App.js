@@ -1,35 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { Component } from "react";
+import logo from "./logo.svg";
 
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-datetime/css/react-datetime.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datetime/css/react-datetime.css";
 
-import Datetime from 'react-datetime';
-import InputMask from 'react-input-mask';
+import Datetime from "react-datetime";
+import InputMask from "react-input-mask";
 
 import {
   Valido,
   EmailValidation,
   PasswordValidation,
   PhoneValidation,
-  RequiredValidation,
-} from './helpers/Valido';
+  RequiredValidation
+} from "./lib/Valido";
+import LengthValidation from "./lib/LengthValidation";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Phone: '',
-      Email: '',
-      Password: '',
-      DateofBirth: '',
+      Username: "",
+      Phone: "",
+      Email: "",
+      Password: "",
+      DateofBirth: "",
       Dirty: false,
       PasswordDetails: {
         alphanumeric: false,
         containsUpperCase: false,
         minlength: 8,
-        maxlength: 10,
+        maxlength: 10
       }
     };
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -47,29 +49,32 @@ class App extends Component {
     event.preventDefault();
     this.setState({ Dirty: true }, () => {
       if (this.isValid(this.state)) {
-        alert('yeah, buddy');
+        alert("yeah, buddy");
       } else {
-        console.warn('form is invalid');
+        console.warn("form is invalid");
       }
     });
   }
 
-  isValid({ Phone, Email, Password, DateofBirth }) {
-    return Valido.IsEmail(Email)
-      && Valido.IsPhoneNumber(Phone, 'en-US')
-      && Valido.IsPassword(Password, false, false, 6, 15)
-      && !Valido.IsEmpty(DateofBirth);
+  isValid({ Username, Phone, Email, Password, DateofBirth }) {
+    return (
+      Valido.HasProperLength(Username) &&
+      Valido.IsEmail(Email) &&
+      Valido.IsPhoneNumber(Phone, "en-US") &&
+      Valido.IsPassword(Password, false, false, 6, 15) &&
+      !Valido.IsEmpty(DateofBirth)
+    );
   }
 
   render() {
-
     const {
+      Username,
       Phone,
       Email,
       Password,
       PasswordDetails,
       DateofBirth,
-      Dirty,
+      Dirty
     } = this.state;
 
     return (
@@ -81,12 +86,41 @@ class App extends Component {
 
         <div className="container">
           <form className="w-100" onSubmit={this.handleSubmit} noValidate>
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="form-group">
+                  <label className="text-left" htmlFor={"Username"}>
+                    Username <span style={{ color: "red" }}>*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    autoComplete="username"
+                    className="form-control"
+                    id="Username"
+                    name="Username"
+                    onChange={this.handleUserInput}
+                    required
+                  />
+
+                  {Dirty && (
+                    <LengthValidation
+                      value={Username}
+                      fieldName="Username"
+                      minlength={6}
+                      maxlength={32}
+                      locale={"es-PR"}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
 
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left" htmlFor={'Email'}>
-                    Email <span style={{ color: 'red' }}>*</span>
+                  <label className="text-left" htmlFor={"Email"}>
+                    Email <span style={{ color: "red" }}>*</span>
                   </label>
 
                   <input
@@ -99,8 +133,13 @@ class App extends Component {
                     required
                   />
 
-                  {Dirty && <EmailValidation value={Email} required={true} />}
-
+                  {Dirty && (
+                    <EmailValidation
+                      value={Email}
+                      required={true}
+                      locale={"es-PR"}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -115,13 +154,13 @@ class App extends Component {
                       <input
                         name="PasswordDetails.alphanumeric"
                         type="checkbox"
-                        onChange={(event) => {
+                        onChange={event => {
                           this.setState({
                             PasswordDetails: {
                               ...PasswordDetails,
                               alphanumeric: event.target.checked
                             }
-                          })
+                          });
                         }}
                       />
                       alphanumeric:
@@ -133,19 +172,18 @@ class App extends Component {
                       <input
                         name="PasswordDetails.containsUpperCase"
                         type="checkbox"
-                        onChange={(event) => {
+                        onChange={event => {
                           this.setState({
                             PasswordDetails: {
                               ...PasswordDetails,
                               containsUpperCase: event.target.checked
                             }
-                          })
+                          });
                         }}
                       />
                       contains capital letters:
                     </label>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -153,8 +191,8 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left" htmlFor={'Password'}>
-                    Password <span style={{ color: 'red' }}>*</span>
+                  <label className="text-left" htmlFor={"Password"}>
+                    Password <span style={{ color: "red" }}>*</span>
                   </label>
 
                   <input
@@ -166,8 +204,16 @@ class App extends Component {
                     onChange={this.handleUserInput}
                   />
 
-                  {Dirty && <PasswordValidation value={Password} alphanumeric={PasswordDetails.alphanumeric} containsUpperCase={PasswordDetails.containsUpperCase} minlength={6} required={true} />}
-
+                  {Dirty && (
+                    <PasswordValidation
+                      value={Password}
+                      alphanumeric={PasswordDetails.alphanumeric}
+                      containsUpperCase={PasswordDetails.containsUpperCase}
+                      minlength={6}
+                      required={true}
+                      locale={"es-PR"}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -175,8 +221,8 @@ class App extends Component {
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left" htmlFor={'Phone'}>
-                    Phone with Mask <span style={{ color: 'red' }}>*</span>
+                  <label className="text-left" htmlFor={"Phone"}>
+                    Phone with Mask <span style={{ color: "red" }}>*</span>
                   </label>
 
                   <InputMask
@@ -190,18 +236,22 @@ class App extends Component {
                     {...this.props}
                   />
 
-                  {Dirty && <PhoneValidation value={Phone} locale={'en-US'} required={true} />}
-
+                  {Dirty && (
+                    <PhoneValidation
+                      value={Phone}
+                      locale={"es-PR"}
+                      required={true}
+                    />
+                  )}
                 </div>
               </div>
             </div>
 
-
             <div className="row">
               <div className="col-xs-12">
                 <div className="form-group">
-                  <label className="text-left" htmlFor={'DateofBirth'}>
-                    Date of Birth <span style={{ color: 'red' }}>*</span>
+                  <label className="text-left" htmlFor={"DateofBirth"}>
+                    Date of Birth <span style={{ color: "red" }}>*</span>
                   </label>
                   <Datetime
                     timeFormat={false}
@@ -213,13 +263,17 @@ class App extends Component {
                     }}
                   />
 
-                  {Dirty && <RequiredValidation value={DateofBirth} fieldName={'Date of Birth'} />}
+                  {Dirty && (
+                    <RequiredValidation
+                      value={DateofBirth}
+                      fieldName={"Date of Birth"}
+                    />
+                  )}
                 </div>
               </div>
             </div>
 
             <button className="btn btn-primary">Submit</button>
-
           </form>
         </div>
       </div>

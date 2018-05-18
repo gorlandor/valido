@@ -1,4 +1,4 @@
-import Valido from "./helpers/Valido.util";
+import Valido from "./lib/Valido.util";
 
 const strings = [
   "cake",
