@@ -3,6 +3,7 @@ import Valido from "./Valido.util";
 import defaultStyles from "./Styles";
 
 import RequiredValidation from "./RequiredValidation";
+import { passwordValidationMessage } from "./ValidationMessages";
 
 const PasswordValidation = ({
   value,
@@ -14,7 +15,7 @@ const PasswordValidation = ({
   showValue = false,
   required = false,
   styles = defaultStyles,
-  callback = (valid = false, type = "") => {}
+  callback = (valid = false, type = "") => { }
 }) => {
   const isPassword = Valido.IsPassword(
     value,
@@ -28,41 +29,6 @@ const PasswordValidation = ({
 
   callback(isPassword, "Password");
 
-  const validationMessageES = {
-    alphanumeric: alphanumeric ? `ser alfanumérico,` : ``,
-    shouldContainUpperCase: containsUpperCase
-      ? `contener letra(s) mayúsculas,`
-      : ``,
-    properLength: `tener entre ${minlength} y ${maxlength} carácteres.`
-  };
-
-  const validationMessage = {
-    alphanumeric: alphanumeric ? `be alphanumeric,` : ``,
-    shouldContainUpperCase: containsUpperCase
-      ? `contain capital letter(s),`
-      : ``,
-    properLength: `have a length of ${minlength} to ${maxlength} chars.`
-  };
-
-  const getValidationMessage = (
-    value,
-    showValue,
-    locale,
-    validationMessage,
-    validationMessageES
-  ) => {
-    const identifier = showValue
-      ? `${value}`
-      : `Password`;
-
-    return locale === "es-PR"
-      ? `${identifier} debe ${validationMessageES.alphanumeric} ${
-          validationMessageES.shouldContainUpperCase
-        } ${validationMessageES.properLength}`
-      : `${identifier} must ${validationMessage.alphanumeric} ${
-          validationMessage.shouldContainUpperCase
-        } ${validationMessage.properLength}`;
-  };
 
   if (required) {
     return (
@@ -76,12 +42,14 @@ const PasswordValidation = ({
         {!isEmpty &&
           !isPassword && (
             <p style={defaultStyles}>
-              {getValidationMessage(
+              {passwordValidationMessage(
                 value,
+                alphanumeric,
+                containsUpperCase,
+                minlength,
+                maxlength,
                 showValue,
-                locale,
-                validationMessage,
-                validationMessageES
+                locale
               )}
             </p>
           )}
@@ -92,13 +60,15 @@ const PasswordValidation = ({
       <React.Fragment>
         {!isPassword && (
           <p style={defaultStyles}>
-            {getValidationMessage(
-              value,
-              showValue,
-              locale,
-              validationMessage,
-              validationMessageES
-            )}
+          {passwordValidationMessage(
+            value,
+            alphanumeric,
+            containsUpperCase,
+            minlength,
+            maxlength,
+            showValue,
+            locale
+          )}
           </p>
         )}
       </React.Fragment>

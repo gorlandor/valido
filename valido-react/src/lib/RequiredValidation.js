@@ -1,12 +1,7 @@
 import React from "react";
 import Valido from "./Valido.util";
 import defaultStyles from "./Styles";
-
-const getValidationMessage = (fieldName = "", locale = "en-US") => {
-  return locale === "es-PR"
-    ? `El campo ${fieldName} es requerido.`
-    : `The field ${fieldName} is required.`;
-};
+import { requiredValidationMessage } from "./ValidationMessages";
 
 const RequiredValidation = ({
   value,
@@ -15,7 +10,7 @@ const RequiredValidation = ({
   styles = defaultStyles
 }) =>
   Valido.IsEmpty(value) && (
-    <p style={defaultStyles}>{getValidationMessage(fieldName, locale)}</p>
+    <p style={defaultStyles}>{requiredValidationMessage(fieldName, locale)}</p>
   );
 
 export default RequiredValidation;

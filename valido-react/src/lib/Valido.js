@@ -1,8 +1,15 @@
-import Valido from './Valido.util';
-import RequiredValidation from './RequiredValidation';
-import EmailValidation from './EmailValidation';
-import PasswordValidation from './PasswordValidation';
-import PhoneValidation from './PhoneValidation';
+import Valido from "./Valido.util";
+import EmailValidation from "./EmailValidation";
+import LengthValidation from "./LengthValidation";
+import PasswordValidation from "./PasswordValidation";
+import PhoneValidation from "./PhoneValidation";
+import RequiredValidation from "./RequiredValidation";
 
-
-export { Valido, RequiredValidation, EmailValidation, PasswordValidation, PhoneValidation };
+export {
+  Valido,
+  EmailValidation,
+  LengthValidation,
+  PasswordValidation,
+  PhoneValidation,
+  RequiredValidation
+};

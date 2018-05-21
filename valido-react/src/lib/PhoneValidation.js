@@ -3,17 +3,8 @@ import Valido from "./Valido.util";
 import defaultStyles from "./Styles";
 
 import RequiredValidation from "./RequiredValidation";
+import { phoneValidationMessage } from "./ValidationMessages";
 
-const getValidationMessage = (value, showValue, locale) => {
-  const identifier = showValue
-    ? `${value}`
-    : locale === "es-PR"
-      ? `El valor dado`
-      : `The value given`;
-  return locale === "es-PR"
-    ? `${identifier} no es un teléfono valido.`
-    : `${identifier} is not a valid phone.`;
-};
 
 const PhoneValidation = ({
   value,
@@ -40,7 +31,7 @@ const PhoneValidation = ({
         {!isEmpty &&
           !isPhoneNumber && (
             <p style={defaultStyles}>
-              {getValidationMessage(value, showValue, locale)}
+              {phoneValidationMessage(value, showValue, locale)}
             </p>
           )}
       </React.Fragment>
@@ -50,7 +41,7 @@ const PhoneValidation = ({
       <React.Fragment>
         {!isPhoneNumber && (
           <p style={defaultStyles}>
-            {getValidationMessage(value, showValue, locale)}
+            {phoneValidationMessage(value, showValue, locale)}
           </p>
         )}
       </React.Fragment>

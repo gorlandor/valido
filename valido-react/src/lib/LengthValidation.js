@@ -3,17 +3,8 @@ import Valido from "./Valido.util";
 import defaultStyles from "./Styles";
 
 import RequiredValidation from "./RequiredValidation";
+import { lengthValidationMessage } from "./ValidationMessages";
 
-const getValidationMessage = (
-  fieldName = "",
-  minlength = 6,
-  maxlength = 32,
-  locale = "en-US"
-) => {
-  return locale === "es-PR"
-    ? `${fieldName} debe tener entre ${minlength} y ${maxlength} carácteres.`
-    : `${fieldName} must have a length of ${minlength} to ${maxlength} chars.`;
-};
 
 const LengthValidation = ({
   value,
@@ -32,7 +23,7 @@ const LengthValidation = ({
     return (
       !hasProperLength && (
         <p style={defaultStyles}>
-          {getValidationMessage(fieldName, minlength, maxlength, locale)}
+          {lengthValidationMessage(fieldName, minlength, maxlength, locale)}
         </p>
       )
     );

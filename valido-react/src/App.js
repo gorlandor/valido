@@ -11,11 +11,11 @@ import InputMask from "react-input-mask";
 import {
   Valido,
   EmailValidation,
+  LengthValidation,
   PasswordValidation,
   PhoneValidation,
   RequiredValidation
 } from "./lib/Valido";
-import LengthValidation from "./lib/LengthValidation";
 
 class App extends Component {
   constructor(props) {
