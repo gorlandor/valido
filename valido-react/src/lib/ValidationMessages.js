@@ -1,3 +1,10 @@
+/**
+ * @function emailValidationMessage
+ * @param {string} value 
+ * @param {boolean} showValue 
+ * @param {string} locale 
+ * @returns string
+ */
 export const emailValidationMessage = (value, showValue, locale) => {
   const identifier = showValue
     ? `${value}`
@@ -9,6 +16,14 @@ export const emailValidationMessage = (value, showValue, locale) => {
     : `${identifier} is not a valid email.`;
 };
 
+/**
+ * @function lengthValidationMessage
+ * @param {string} fieldName 
+ * @param {number} minlength 
+ * @param {number} maxlength 
+ * @param {string} locale 
+ * @returns string
+ */
 export const lengthValidationMessage = (
   fieldName = "",
   minlength = 6,
@@ -20,6 +35,12 @@ export const lengthValidationMessage = (
     : `${fieldName} must have a length of ${minlength} to ${maxlength} chars.`;
 };
 
+/**
+ * @function shouldBeAlphanumeric
+ * @param {boolean} alphanumeric 
+ * @param {string} locale 
+ * @returns string
+ */
 const shouldBeAlphanumeric = (alphanumeric = true, locale = "en-US") => {
   if (alphanumeric === false) {
     return "";
@@ -30,6 +51,12 @@ const shouldBeAlphanumeric = (alphanumeric = true, locale = "en-US") => {
   }
 };
 
+/**
+ * @function shouldContainUpperCase
+ * @param {boolean} containsUpperCase 
+ * @param {string} locale 
+ * @returns string
+ */
 const shouldContainUpperCase = (containsUpperCase = true, locale = "en-US") => {
   if (containsUpperCase === false) {
     return "";
@@ -40,12 +67,30 @@ const shouldContainUpperCase = (containsUpperCase = true, locale = "en-US") => {
   }
 };
 
+/**
+ * @function shouldHaveProperLength
+ * @param {number} minlength 
+ * @param {number} maxlength 
+ * @param {string} locale 
+ * @returns string
+ */
 const shouldHaveProperLength = (minlength, maxlength, locale = "en-US") => {
   return locale === "es-PR"
     ? `debe tener entre ${minlength} y ${maxlength} carácteres.`
     : `should have a length of ${minlength} to ${maxlength} chars.`;
 };
 
+/**
+ * @function passwordValidationMessage
+ * @param {string} value 
+ * @param {boolean} alphanumeric 
+ * @param {boolean} containsUpperCase 
+ * @param {number} minlength 
+ * @param {number} maxlength 
+ * @param {boolean} showValue 
+ * @param {string} locale 
+ * @returns string
+ */
 export const passwordValidationMessage = (
   value,
   alphanumeric = true,
@@ -62,6 +107,13 @@ export const passwordValidationMessage = (
   ${shouldHaveProperLength(minlength, maxlength, locale)}`;
 };
 
+/**
+ * @function phoneValidationMessage
+ * @param {string} value 
+ * @param {boolean} showValue 
+ * @param {string} locale 
+ * @returns string
+ */
 export const phoneValidationMessage = (value, showValue, locale) => {
   const identifier = showValue
     ? `${value}`
@@ -73,8 +125,43 @@ export const phoneValidationMessage = (value, showValue, locale) => {
     : `${identifier} is not a valid phone.`;
 };
 
+/**
+ * @function requiredValidationMessage
+ * @param {string} fieldName 
+ * @param {string} locale 
+ * @returns string
+ */
 export const requiredValidationMessage = (fieldName = "", locale = "en-US") => {
   return locale === "es-PR"
     ? `El campo ${fieldName} es requerido.`
     : `The field ${fieldName} is required.`;
 };
+
+export const dateValidationMessage = (value, showValue, fieldName, locale = "en-US") => {
+  const identifier = showValue 
+    ? `${value}` 
+    : locale === "es-PR" 
+      ? `El valor dado` + ((typeof fieldName === "string" && fieldName !== "") && (" para " + fieldName))
+      : `The value given` + ((typeof fieldName === "string" && fieldName !== "") && (" for " + fieldName));
+    return locale === "es-PR"
+      ? `${identifier} no es una fecha valida (MM/dd/yyy).`
+      : `${identifier} is not a valid date (MM/dd/yyy).`
+}
+
+/**
+ * @function ssnValidationMessage
+ * @param {string} value 
+ * @param {boolean} showValue 
+ * @param {string} locale 
+ * @returns string
+ */
+export const ssnValidationMessage = (value, showValue, locale = "en-US") => {
+  const identifier = showValue
+    ? `${value}`
+    : locale === "es-PR"
+      ? `El valor dado`
+      : `The value given`;
+  return locale === "es-PR"
+    ? `${identifier} no es un número de seguro social valido.`
+    : `${identifier} is not a valid social security number.`;
+}

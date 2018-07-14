@@ -3,50 +3,45 @@ import logo from "./logo.svg";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "react-datetime/css/react-datetime.css";
 
-import Datetime from "react-datetime";
 import InputMask from "react-input-mask";
 
 import {
   Valido,
+  DateValidation,
   EmailValidation,
   LengthValidation,
   PasswordValidation,
-  PhoneValidation,
-  RequiredValidation
+  PhoneValidation
 } from "./lib/Valido";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Username: "",
-      Phone: "",
-      Email: "",
-      Password: "",
-      DateofBirth: "",
-      Dirty: false,
-      PasswordDetails: {
-        alphanumeric: false,
-        containsUpperCase: false,
-        minlength: 8,
-        maxlength: 10
-      }
-    };
-    this.handleUserInput = this.handleUserInput.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.isValid = this.isValid.bind(this);
+  state = {
+    Username: "",
+    Phone: "",
+    Email: "",
+    Password: "",
+    DateofBirth: "",
+    Dirty: false,
+    PasswordDetails: {
+      alphanumeric: false,
+      containsUpperCase: false,
+      minlength: 8,
+      maxlength: 10
+    }
   }
 
-  handleUserInput(event) {
+  handleUserInput = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
+    console.log({
+      state: this.state
+    })
     this.setState({ Dirty: true }, () => {
       if (this.isValid(this.state)) {
         alert("yeah, buddy");
@@ -56,7 +51,7 @@ class App extends Component {
     });
   }
 
-  isValid({ Username, Phone, Email, Password, DateofBirth }) {
+  isValid = ({ Username, Phone, Email, Password, DateofBirth }) => {
     return (
       Valido.HasProperLength(Username) &&
       Valido.IsEmail(Email) &&
@@ -101,6 +96,7 @@ class App extends Component {
                     name="Username"
                     onChange={this.handleUserInput}
                     required
+                    value={this.state.Username}
                   />
 
                   {Dirty && (
@@ -131,6 +127,7 @@ class App extends Component {
                     name="Email"
                     onChange={this.handleUserInput}
                     required
+                    value={this.state.Email}
                   />
 
                   {Dirty && (
@@ -162,6 +159,7 @@ class App extends Component {
                             }
                           });
                         }}
+                        checked={this.state.PasswordDetails.alphanumeric}
                       />
                       alphanumeric:
                     </label>
@@ -180,6 +178,7 @@ class App extends Component {
                             }
                           });
                         }}
+                        checked={this.state.PasswordDetails.containsUpperCase}
                       />
                       contains capital letters:
                     </label>
@@ -202,6 +201,7 @@ class App extends Component {
                     id="Password"
                     name="Password"
                     onChange={this.handleUserInput}
+                    value={this.state.Password}
                   />
 
                   {Dirty && (
@@ -234,6 +234,7 @@ class App extends Component {
                     name="Phone"
                     onChange={this.handleUserInput}
                     {...this.props}
+                    value={this.state.Phone}
                   />
 
                   {Dirty && (
@@ -253,20 +254,24 @@ class App extends Component {
                   <label className="text-left" htmlFor={"DateofBirth"}>
                     Date of Birth <span style={{ color: "red" }}>*</span>
                   </label>
-                  <Datetime
-                    timeFormat={false}
-                    inputProps={{
-                      className: "form-control",
-                      id: "DateofBirth",
-                      name: "DateofBirth",
-                      onBlur: this.handleUserInput
-                    }}
+                  <InputMask                    
+                    className="form-control"
+                    id="DateofBirth"
+                    mask="99/99/9999"
+                    maskChar="_"
+                    name="DateofBirth"
+                    onChange={this.handleUserInput}
+                    {...this.props}
+                    value={this.state.DateofBirth}
                   />
 
                   {Dirty && (
-                    <RequiredValidation
+                    <DateValidation
                       value={DateofBirth}
-                      fieldName={"Date of Birth"}
+                      fieldName={"fecha de nacimiento"}
+                      locale={"es-PR"}
+                      required={true}
+                      showValue={false}
                     />
                   )}
                 </div>

@@ -37,11 +37,11 @@ const PasswordValidation = ({
           fieldName={"password"}
           value={value}
           locale={locale}
-          styles={defaultStyles}
+          styles={styles}
         />
         {!isEmpty &&
           !isPassword && (
-            <p style={defaultStyles}>
+            <p style={styles}>
               {passwordValidationMessage(
                 value,
                 alphanumeric,
@@ -59,7 +59,7 @@ const PasswordValidation = ({
     return (
       <React.Fragment>
         {!isPassword && (
-          <p style={defaultStyles}>
+          <p style={styles}>
           {passwordValidationMessage(
             value,
             alphanumeric,

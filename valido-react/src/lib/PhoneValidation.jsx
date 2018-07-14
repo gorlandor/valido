@@ -26,11 +26,11 @@ const PhoneValidation = ({
           fieldName={locale === "es-PR" ? "teléfono" : "phone"}
           locale={locale}
           value={value}
-          styles={defaultStyles}
+          styles={styles}
         />
         {!isEmpty &&
           !isPhoneNumber && (
-            <p style={defaultStyles}>
+            <p style={styles}>
               {phoneValidationMessage(value, showValue, locale)}
             </p>
           )}
@@ -40,7 +40,7 @@ const PhoneValidation = ({
     return (
       <React.Fragment>
         {!isPhoneNumber && (
-          <p style={defaultStyles}>
+          <p style={styles}>
             {phoneValidationMessage(value, showValue, locale)}
           </p>
         )}

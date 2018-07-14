@@ -5,7 +5,12 @@ import defaultStyles from "./Styles";
 import RequiredValidation from "./RequiredValidation";
 import { emailValidationMessage } from "./ValidationMessages";
 
-
+/**
+ * @function EmailValidation
+ * @typedef {{ color: string, margin: string, padding: string }} Styles 
+ * @param {{ value: string, locale: string, required: boolean, showValue: boolean, styles: Styles, callback: function(boolean, string) }} param0
+ * @returns JSX.Element 
+ */
 const EmailValidation = ({
   value,
   locale = "en-US",
@@ -25,11 +30,11 @@ const EmailValidation = ({
           fieldName={"email"}
           locale={locale}
           value={value}
-          styles={defaultStyles}
+          styles={styles}
         />
         {!isEmpty &&
           !isEmail && (
-            <p style={defaultStyles}>
+            <p style={styles}>
               {emailValidationMessage(value, showValue, locale)}
             </p>
           )}
@@ -39,7 +44,7 @@ const EmailValidation = ({
     return (
       <React.Fragment>
         {!isEmail && (
-          <p style={defaultStyles}>
+          <p style={styles}>
             {emailValidationMessage(value, showValue, locale)}
           </p>
         )}
