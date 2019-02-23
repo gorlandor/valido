@@ -1,19 +1,12 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Component } from "react";
+import InputMask from "react-input-mask";
+import "./App.css";
+import { DateValidation, EmailValidation, LengthValidation, PasswordValidation, PhoneValidation, Valido } from "./lib/Valido";
 import logo from "./logo.svg";
 
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-import InputMask from "react-input-mask";
 
-import {
-  Valido,
-  DateValidation,
-  EmailValidation,
-  LengthValidation,
-  PasswordValidation,
-  PhoneValidation
-} from "./lib/Valido";
 
 class App extends Component {
   state = {
@@ -79,10 +72,10 @@ class App extends Component {
           <h1 className="App-title">Valido</h1>
         </header>
 
-        <div className="container">
+        <div className="container d-flex justify-content-center" style={{ maxWidth: "768px" }}>
           <form className="w-100" onSubmit={this.handleSubmit} noValidate>
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <label className="text-left" htmlFor={"Username"}>
                     Username <span style={{ color: "red" }}>*</span>
@@ -113,7 +106,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <label className="text-left" htmlFor={"Email"}>
                     Email <span style={{ color: "red" }}>*</span>
@@ -142,7 +135,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <h4 className="text-success">Password Details</h4>
 
@@ -188,7 +181,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <label className="text-left" htmlFor={"Password"}>
                     Password <span style={{ color: "red" }}>*</span>
@@ -219,7 +212,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <label className="text-left" htmlFor={"Phone"}>
                     Phone with Mask <span style={{ color: "red" }}>*</span>
@@ -249,7 +242,7 @@ class App extends Component {
             </div>
 
             <div className="row">
-              <div className="col-xs-12">
+              <div className="col-12">
                 <div className="form-group">
                   <label className="text-left" htmlFor={"DateofBirth"}>
                     Date of Birth <span style={{ color: "red" }}>*</span>
