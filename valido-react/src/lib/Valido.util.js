@@ -1,4 +1,4 @@
-import validator from "validator";
+const validator = require("validator");
 
 /**
  * Validation library for handling checks for
@@ -13,6 +13,26 @@ class Valido {
   static containsLowerCase = new RegExp(/(?=.*[a-z])/, "g");
   /** @type {RegExp} */
   static containsUpperCase = new RegExp(/(?=.*[A-Z])/, "g");
+  /** @type {RegExp} */
+  static containsSpecialChar = new RegExp(`[!@#$%^&*(),.?":{}|<>]`);
+
+  static IsAlphaNumericOnly(value = "") {
+    if (!typeof value === "string") {
+      return false;
+    }
+
+    const regex = new RegExp(/^[A-Za-z0-9]+$/);
+    return regex.test(value);
+  }
+
+  static IsNumericOnly(value = "") {
+    if (!typeof value === "string") {
+      return false;
+    }
+
+    const regex = new RegExp(/^[0-9]+$/);
+    return regex.test(value);
+  }
 
   /**
    * @function Valido.HasProperLength
@@ -127,4 +147,4 @@ class Valido {
 
 }
 
-export default Valido;
+module.exports = Valido;
