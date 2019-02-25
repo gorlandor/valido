@@ -121,6 +121,13 @@ class Valido {
     return value.replace(regex, "");
   }
 
+  static IsResidentialAddress(value = "") {
+    if (typeof value !== "string") return false;
+
+    const regex = new RegExp(/^po|^po box|^p.o.|^p.o. box|^post office box|^pmb|^private mailbox|^hc|^rr|hc [0-9]+ box [0-9]+|po box [0-9]+|rr [0-9]+ box [0-9]+/gim);
+    return regex.test(value) == false;
+  }
+
   /**
    * @function Valido.IsSSN
    * @param {string} value
