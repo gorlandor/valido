@@ -15,13 +15,22 @@ Valido — A helper library for form validation built on top of .@chriso's valid
 
 ```javascript
 
-const Valido = require('../lib/Valido.util');
-const idNumber = '$not_alpha_numeric_only#(u)123';
+const Valido = require("../lib/Valido.util");
+const expect = require('expect');
 
-if (Valido.IsAlphaNumericOnly(idNumber) === true) {
-    alert('Valid id');
-} else {
-    alert('Not Valido');
-}
+test('String does not meet specified length', () => {
+
+  const username = "bass";
+
+  const { valid, errors } = Valido.validateProperLength({
+    value: username,
+    minLength: 8,
+    maxLength: 15
+  });
+
+  expect(errors.length).toBeGreaterThan(0);
+  expect(valid).toEqual(false);
+
+});
 
 ```

@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box;  
+}
+html,body {
+  color: black;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #F5B7CF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  border: none;
+  box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+.card-header {
+  color: #fff !important;
+  background-color: #82204A !important;  
+  border: none;
+  border-radius: 0;
+}
+.card-header:first-child {
+  border-radius: 0;
+}
+
+form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.col-form-label {
+  color: #26408B;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+.btn-primary {
+  background-color: #82204A !important; 
+}
+
+p, label, span {
+  font-size: 14px !important;
+  margin: 0;
+}
+
+.btn, .form-control {
+  height: 32px !important;  
+  line-height: normal;
+}
+
+.form-group {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.card-body label {
+  float: left;
+}
+
+p.text-danger {
+  color: #dc3545 !important;
+  text-align: left;
+}

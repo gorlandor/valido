@@ -1,6 +1,21 @@
 const Valido = require("../lib/Valido.util");
 const expect = require('expect');
 
+test('String does not meet specified length', () => {
+
+  const username = "bass";
+
+  const { valid, errors } = Valido.validateProperLength({
+    value: username,
+    minLength: 8,
+    maxLength: 15
+  });
+
+  expect(errors.length).toBeGreaterThan(0);
+  expect(valid).toEqual(false);
+
+});
+
 test('String should be Alphanumeric Only', () => {
   expect(Valido.IsAlphaNumericOnly("cake")).toEqual(true);
   expect(Valido.IsAlphaNumericOnly("cake by the ocean")).toEqual(false);
