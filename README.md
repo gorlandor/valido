@@ -7,9 +7,9 @@ Valido — A helper library for form validation built on top of .@chriso's valid
 
 2. Navigate into the valido folder: `$ cd valido`  
 
-3. Install deps using yarn: `$ yarn install`  
+3. Install deps using npm: `$ npm install`  
 
-4. Test using jest `$ yarn jest`  
+4. Test using jest `$ npm run jest`  
 
 # example usage
 

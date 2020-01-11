@@ -3,5 +3,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Usage
 
 1. Install deps `npm install`
-2. Run tests `npm run jest`
-3. Serve locally in development mode `cd valido-react && npm install && npm start`
+2. Serve locally in development mode `npm start`
